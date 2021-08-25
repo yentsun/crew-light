@@ -1,2 +1,2 @@
-# fancy-band
-A React PWA experiment with Mongo Realm as backend.
+# Light Crew
+A React/PWA experiment to create a lightweight version of SimpleCrew client app.
