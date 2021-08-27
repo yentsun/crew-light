@@ -14,7 +14,6 @@ export default function useLogout() {
 
         async function doLogOut() {
             console.debug('clearing user data from storage...');
-            await viki.currentUser.logOut();
             dispatch({ type: actionTypes.USER_LOGGED_OUT });
 
             console.debug(`redirecting to ${w.login} screen`);

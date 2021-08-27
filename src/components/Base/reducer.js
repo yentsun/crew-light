@@ -1,5 +1,5 @@
 import React from 'react';
-import { actionTypes as a, words as w } from '../../dictionary';
+import { actionTypes as a } from '../../dictionary';
 
 
 /*****************!! WARNING !!**********************

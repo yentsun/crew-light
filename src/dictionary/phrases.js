@@ -1,4 +1,4 @@
-import w from './words';
+// import w from './words';
 
 
 const phrases = {

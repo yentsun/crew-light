@@ -1,3 +1,10 @@
+:root {
+    --serif: monospace;
+    --primaryBlue: #2194E0;
+    --primaryBlueDark: #196896;
+}
+
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +12,88 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 20px;
+    background: aliceblue;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a {
+    color: var(--primaryBlue);
+}
+
+.center {
+    display: grid;
+    grid-template-rows: 100vh;
+    align-items: center;
+    justify-items: center;
+}
+
+
+/* FORM */
+
+form {
+    min-width: 300px;
+}
+
+form * {
+    display: block;
+}
+
+input {
+    font-family: var(--serif);
+    border: 2px solid gray;
+    font-size: 90%;
+    padding: .5em;
+    margin-bottom: 1em;
+    width: calc(100% - 1em - 2px);
+    background: white;
+}
+
+label {
+    margin-bottom: .4em;
+}
+
+button {
+    font-size: 90%;
+    padding: .4em .5em;
+    outline: none;
+    cursor: pointer;
+}
+
+button.primary {
+    background-color: var(--primaryBlue);
+    border: none;
+    border-bottom: 4px solid var(--primaryBlueDark);
+    color: white;
+    opacity: 0.8;
+    float: right;
+}
+
+button.primary:hover {
+    opacity: 1;
+}
+
+button.primary:focus {
+    border-bottom: none;
+    border-top: 4px solid white
+}
+
+h1 {
+    text-transform: capitalize;
+}
+
+#logo {
+    width: 80px;
+    margin: 0 auto 0 auto;
+    display: block;
+}
+
+
+button[type=submit] {
+    margin-top: .7em;
+}
+
