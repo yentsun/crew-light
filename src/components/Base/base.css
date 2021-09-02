@@ -77,7 +77,7 @@ button.primary:hover {
     opacity: 1;
 }
 
-button.primary:focus {
+button.primary:focus, button.primary:disabled {
     border-bottom: none;
     border-top: 4px solid white
 }
@@ -91,7 +91,6 @@ h1 {
     margin: 0 auto 0 auto;
     display: block;
 }
-
 
 button[type=submit] {
     margin-top: .7em;

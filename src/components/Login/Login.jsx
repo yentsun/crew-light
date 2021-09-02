@@ -8,10 +8,10 @@ import './login.css';
 
 export default function Login() {
 
-    const history = useHistory();
+    // const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [ setCredentials ] = useLogin();
+    const [ setCredentials, loginState ] = useLogin();
 
     function handleSubmit(e) {
         console.debug('submitting', { email });
@@ -35,7 +35,10 @@ export default function Login() {
             <input id={ w.password } type="password" value={ password }
                    onChange={ (e) => setPassword(e.target.value) }/>
 
-            <button className="primary" type="submit">{ w.submit }</button>
+            <button disabled={ loginState.isInProgress } className="primary"
+                    type="submit">
+                { w.submit }
+            </button>
 
             <a target="blank" href="https://app.simplecrew.com/register">Don't have an account?</a>
 

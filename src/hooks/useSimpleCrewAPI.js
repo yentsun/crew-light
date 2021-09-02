@@ -5,7 +5,7 @@ import { actionTypes as a } from '../dictionary';
 const initialState = {
     hasStarted: false,
     isInProgress: false,
-    hasFinished: true,
+    hasFinished: false,
     hasFailed: null,
     hasSucceeded: null,
     body: null,
@@ -51,12 +51,6 @@ function reducer(state, action) {
                     headers: action.response.headers
                 }};
 
-        case a.REQUEST_END:
-            return {...state,
-                isInProgress: false,
-                hasFinished: true
-            }
-
         default:
             throw new Error('Unknown action type');
     }
@@ -67,13 +61,11 @@ export default function useSimpleCrewAPI() {
     const [ requestConfig, setRequestConfig ] = useState(null);
     const [ state, dispatch ] = useReducer(reducer, initialState);
 
-    console.debug(state);
-
-
     useEffect(() => {
 
         async function performRequest() {
 
+            console.debug('requesting', requestConfig);
 
             try {
                 const { url, token, headers, data, ...resOfConfig } = requestConfig;
@@ -104,18 +96,15 @@ export default function useSimpleCrewAPI() {
                 dispatch({ type: a.SUCCESS, response });
 
             } catch (error) {
-                console.error('Unexpected:', error.message, state.config);
+                console.error('Unexpected:', error.message, requestConfig);
                 dispatch({ type: a.ERROR });
-            } finally {
-                setRequestConfig(null);
             }
         }
 
-
-        if (requestConfig && ! state.hasFinished)
+        if (requestConfig)
             performRequest();
 
-    }, [ state, requestConfig ]);
+    }, [ requestConfig ]);
 
     return [ setRequestConfig, state ];
 }

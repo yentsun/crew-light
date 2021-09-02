@@ -9,14 +9,10 @@ export default function useLogin() {
 
     useEffect(() => {
 
-        console.log(credentials)
-
         if (credentials)
             request({ method: 'POST', url: '/login', data: credentials });
 
-        setCredentials(null);
-
     }, [ credentials, request ])
 
-    return [ setCredentials, state.body ];
+    return [ setCredentials, state ];
 }
