@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { words as w, routes as r } from '../../dictionary';
-import './login.css';
 import Logo from '../../Logo.svg';
+import useLogin from "./useLogin";
+import './login.css';
 
 
 export default function Login() {
@@ -10,11 +11,13 @@ export default function Login() {
     const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
+    const [ setCredentials ] = useLogin();
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
+        console.debug('submitting', { email });
         e.preventDefault();
-
-        history.push(r.mainMenu);
+        setCredentials({ email, password });
+        // history.push(r.mainMenu);
     }
 
     return (
