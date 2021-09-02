@@ -7,7 +7,6 @@ import Login from '../Login/Login';
 import TopBar from '../TopBar';
 import MainMenu from '../MainMenu';
 import { BaseContext, initialState, reducer } from './reducer';
-import Logo from '../../Logo.svg';
 import './base.css';
 
 
