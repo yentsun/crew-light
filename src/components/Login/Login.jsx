@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { words as w, routes as r } from '../../dictionary';
 import Logo from '../../Logo.svg';
@@ -8,7 +8,7 @@ import './login.css';
 
 export default function Login() {
 
-    // const history = useHistory();
+    const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ setCredentials, loginState ] = useLogin();
@@ -17,8 +17,17 @@ export default function Login() {
         console.debug('submitting', { email });
         e.preventDefault();
         setCredentials({ email, password });
-        // history.push(r.mainMenu);
     }
+
+    // if token is received: store it and redirect to main menu
+    useEffect(() => {
+
+        if (! loginState.json || ! loginState.json.token) return;
+
+        localStorage.setItem('token', loginState.json.token);
+        history.push(r.mainMenu);
+
+    }, [ loginState.json, history ]);
 
     return (
         <form id="login" onSubmit={ handleSubmit }>

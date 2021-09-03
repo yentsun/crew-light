@@ -25,7 +25,7 @@ function reducer(state, action) {
                 hasStarted: true };
 
         case a.SUCCESS:
-            const { status, body, headers } = action.response;
+            const { status, body, headers, json } = action.response;
             return {
                 ...state,
                 hasSucceeded: true,
@@ -34,7 +34,7 @@ function reducer(state, action) {
                 hasFinished: true,
                 status,
                 body,
-                ...(headers['Content-Type'] === 'application/json') && { json: body.json() },
+                json,
                 headers
             };
 
@@ -86,9 +86,16 @@ export default function useSimpleCrewAPI() {
                     ...resOfConfig
                 });
 
+                // check if response is JSON and if so - parse it to `response.json`
+                if (response.headers.get('content-type').includes('application/json')) {
+                    response.json = await response.json();
+                    console.debug('got response:', response.json);
+                }
+
+                // check if response has 'unsuccessful' status
                 if (! response.ok) {
                     console.error('Error message:', response.status, response.body);
-                    console.log('Original request ID:', response.headers['x-request-id']);
+                    console.debug('Original request ID:', response.headers.get('x-request-id'));
                     dispatch({ type: a.ERROR, response });
                     return;
                 }
