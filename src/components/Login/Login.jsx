@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { words as w, routes as r } from '../../dictionary';
+import { backpack } from '../../index';
 import Logo from '../../Logo.svg';
-import useLogin from "./useLogin";
+import useLoginAPI from './useLogin';
+import useProfileGetAPI from './useProfileGetAPI';
 import './login.css';
 
 
@@ -11,23 +13,35 @@ export default function Login() {
     const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [ setCredentials, loginState ] = useLogin();
+    const [ setCredentials, loginState ] = useLoginAPI();
+    const [ fetchSelf, self ] = useProfileGetAPI();
 
     function handleSubmit(e) {
-        console.debug('submitting', { email });
         e.preventDefault();
         setCredentials({ email, password });
     }
 
-    // if token is received: store it and redirect to main menu
+    // if token is received: store it and request user data
     useEffect(() => {
 
         if (! loginState.json || ! loginState.json.token) return;
 
-        localStorage.setItem('token', loginState.json.token);
+        const token = loginState.json.token;
+        localStorage.setItem('token', token);
+        fetchSelf();
+
+    }, [ loginState.json, history, fetchSelf ]);
+
+    // store user data and redirect to main menu
+    useEffect(() => {
+
+        if (! self) return;
+
+        localStorage.setItem('selfId', self.id);
+        backpack.users.add(self);
         history.push(r.mainMenu);
 
-    }, [ loginState.json, history ]);
+    }, [ self, history ]);
 
     return (
         <form id="login" onSubmit={ handleSubmit }>

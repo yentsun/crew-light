@@ -7,10 +7,11 @@ export default function useLogin() {
     const [ request, state ] = useSimpleCrewAPI();
     const [ credentials, setCredentials ] = useState(null);
 
+    // get the auth token
     useEffect(() => {
 
         if (credentials)
-            request({ method: 'POST', url: '/login', data: credentials });
+            request({ method: 'POST', url: '/login', data: credentials, requiresAuth: false });
 
     }, [ credentials, request ])
 

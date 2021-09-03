@@ -7,9 +7,12 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // init local DB, the backpack
 const backpack = new Dexie('backpack');
-backpack.version(1).stores({ companies: 'id', campaigns: 'id', logs: 'id' });
+backpack.version(1).stores({ companies: 'id', campaigns: 'id', logs: 'id', users: 'id' });
 
 // render Base component
 ReactDOM.render(<React.StrictMode><Base /></React.StrictMode>, document.getElementById('base'));
 
+// PWA
 serviceWorkerRegistration.register();
+
+export { backpack };

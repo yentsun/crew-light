@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import { routes as r } from '../../dictionary';
+import { actionTypes, routes as r } from '../../dictionary';
+import { backpack } from '../../index';
 import PublicRoute from '../PublicRoute';
 import PrivateRoute from '../PrivateRoute';
 import Login from '../Login/Login';
@@ -18,12 +19,15 @@ export default function Base() {
     // load player data if user is logged in
     useEffect(() => {
 
-        async function loadUserData() {
-            // dispatch({ type: a.SELF_DATA_RECEIVED, data: {}});
+        async function loadSelf() {
+
+            const selfId = localStorage.getItem('selfId');
+            const selfData = await backpack.users.get(selfId);
+            dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: selfData });
         }
 
         if (! self)
-            loadUserData();
+            loadSelf();
 
     }, [ self ]);
 

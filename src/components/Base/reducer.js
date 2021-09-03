@@ -15,7 +15,6 @@ export const initialState = {
 export const reducer = (state, action) => {
     switch (action.type) {
 
-        case a.USER_LOGGED_IN:
         case a.SELF_DATA_RECEIVED:
 
             return {...state,

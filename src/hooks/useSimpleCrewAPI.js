@@ -68,7 +68,7 @@ export default function useSimpleCrewAPI() {
             console.debug('requesting', requestConfig);
 
             try {
-                const { url, token, headers, data, ...resOfConfig } = requestConfig;
+                const { url, headers, method, data, requiresAuth=true, ...resOfConfig } = requestConfig;
 
                 if (! url) {
                     console.error('url is not provided');
@@ -76,11 +76,15 @@ export default function useSimpleCrewAPI() {
                 }
 
                 dispatch({ type: a.START });
+                const sendingData = [ 'POST', 'PUT' ].includes(method); // vs getting
 
                 const response = await fetch(`${process.env.REACT_APP_SC_API_BASEURL}${url}`, {
+                    method,
                     headers: {
-                        ...data && { 'Content-Type': 'application/json' },
-                        ...token && { 'Authorization': `Bearer ${token}` }
+                        ...(data && sendingData) &&
+                        { 'Content-Type': 'application/json' },
+                        ...(requiresAuth && localStorage.hasOwnProperty('token')) &&
+                        { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                     },
                     ...data && { body: JSON.stringify(data) },
                     ...resOfConfig
