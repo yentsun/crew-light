@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
-import { words as w, routes as r } from '../../dictionary';
+import { words as w, routes as r, actionTypes } from '../../dictionary';
 import { backpack } from '../../index';
 import Logo from '../../Logo.svg';
 import useLoginAPI from './useLogin';
 import useProfileGetAPI from './useProfileGetAPI';
+import { BaseContext } from '../Base/reducer';
 import './login.css';
 
 
 export default function Login() {
 
     const history = useHistory();
+    const { dispatch } = useContext(BaseContext);
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ setCredentials, loginState ] = useLoginAPI();
@@ -38,7 +40,8 @@ export default function Login() {
         if (! self) return;
 
         localStorage.setItem('selfId', self.id);
-        backpack.users.add(self);
+        backpack.users.put(self);
+        dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: self });
         history.push(r.mainMenu);
 
     }, [ self, history ]);

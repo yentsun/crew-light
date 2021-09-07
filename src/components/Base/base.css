@@ -1,5 +1,5 @@
 :root {
-    --serif: monospace;
+    --mono: 'DM Mono';
     --primaryBlue: #2194E0;
     --primaryBlueDark: #196896;
 }
@@ -7,12 +7,10 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    font-family: var(--mono), monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 20px;
+    font-size: 17px;
     background: aliceblue;
 }
 
@@ -43,8 +41,11 @@ form * {
     display: block;
 }
 
+progress {
+    margin: 1em 0;
+}
+
 input {
-    font-family: var(--serif);
     border: 2px solid gray;
     font-size: 90%;
     padding: .5em;

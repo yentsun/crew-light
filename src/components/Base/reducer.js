@@ -9,7 +9,8 @@ import { actionTypes as a } from '../../dictionary';
  *****************************************************/
 
 export const initialState = {
-    self: null
+    self: null,
+    bootstrapped: false
 };
 
 export const reducer = (state, action) => {
