@@ -1,11 +1,19 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
+
+/**
+ * Fetch required inventory into the **STATE** while displaying
+ * a friendly message with a progress bar
+ *
+ * @component
+ */
 
 export default function Bootstrapper() {
 
     const [ progress, setProgress ] = useState(0);
-
     const [ getCompanies, companies ] = useGetCompanies();
+    const [ getCompanies, companies ] = useGetCampaigns();
+    const [ getCompanies, companies ] = useGetLogs();
 
     useEffect();
 

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { words as w, routes as r, actionTypes } from '../../dictionary';
 import { backpack } from '../../index';
@@ -29,6 +29,7 @@ export default function Login() {
         if (! loginState.json || ! loginState.json.token) return;
 
         const token = loginState.json.token;
+        console.debug('storing token...');
         localStorage.setItem('token', token);
         fetchSelf();
 
