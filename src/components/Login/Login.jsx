@@ -4,7 +4,7 @@ import { words as w, routes as r, actionTypes } from '../../dictionary';
 import { backpack } from '../../index';
 import Logo from '../../Logo.svg';
 import useLoginAPI from './useLogin';
-import useProfileGetAPI from './useProfileGetAPI';
+import useProfileGetAPI from '../Bootstrapper/useProfileGetAPI';
 import { BaseContext } from '../Base/reducer';
 import './login.css';
 
@@ -16,7 +16,6 @@ export default function Login() {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ setCredentials, loginState ] = useLoginAPI();
-    const [ fetchSelf, self ] = useProfileGetAPI();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -31,21 +30,9 @@ export default function Login() {
         const token = loginState.json.token;
         console.debug('storing token...');
         localStorage.setItem('token', token);
-        fetchSelf();
-
-    }, [ loginState.json, history, fetchSelf ]);
-
-    // store user data and redirect to main menu
-    useEffect(() => {
-
-        if (! self) return;
-
-        localStorage.setItem('selfId', self.id);
-        backpack.users.put(self);
-        dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: self });
         history.push(r.mainMenu);
 
-    }, [ self, history ]);
+    }, [ loginState.json, history ]);
 
     return (
         <form id="login" onSubmit={ handleSubmit }>

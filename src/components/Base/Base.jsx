@@ -40,7 +40,7 @@ export default function Base() {
         <BaseContext.Provider value={{ state, dispatch }}>
             <div id="content" className="center">
 
-                { ! bootstrapped &&
+                { (self && ! bootstrapped) &&
                 <Bootstrapper /> }
 
                 { bootstrapped && <>
