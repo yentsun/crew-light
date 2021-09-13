@@ -1,18 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { words as w, routes as r, actionTypes } from '../../dictionary';
-import { backpack } from '../../index';
+import { words as w, routes as r } from '../../dictionary';
 import Logo from '../../Logo.svg';
 import useLoginAPI from './useLogin';
-import useProfileGetAPI from '../Bootstrapper/useProfileGetAPI';
-import { BaseContext } from '../Base/reducer';
 import './login.css';
 
+
+/**
+ * Render Login form, exchange login credentials for token and store it locally
+ *
+ * @component
+ */
 
 export default function Login() {
 
     const history = useHistory();
-    const { dispatch } = useContext(BaseContext);
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ setCredentials, loginState ] = useLoginAPI();

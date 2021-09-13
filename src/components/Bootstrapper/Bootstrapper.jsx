@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { backpack } from '../../index';
-import { actionTypes } from '../../dictionary';
-import { BaseContext } from "../Base/reducer";
-import useProfileGetAPI from './useProfileGetAPI';
+import { actionTypes, words as w } from '../../dictionary';
+import { BaseContext } from '../Base/reducer';
+import useGetSelf from './useGetSelf';
 
 
 /**
@@ -21,8 +21,8 @@ import useProfileGetAPI from './useProfileGetAPI';
 export default function Bootstrapper() {
 
     const { dispatch } = useContext(BaseContext);
-    const [ progress, setProgress ] = useState(0);
-    const [ self ] = useProfileGetAPI();
+    const [ completeTasks, setCompleteTasks ] = useState([]);
+    const [ self ] = useGetSelf();
     const [ getCompanies, companies ] = useGetCompanies();
     const [ getCampaigns, campaigns ] = useGetCampaigns();
     const [ getLogs, logs ] = useGetLogs();
@@ -32,10 +32,11 @@ export default function Bootstrapper() {
 
         if (! self) return;
 
-        localStorage.setItem('selfId', self.id);
+
         dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: self });
-        backpack.users.put(self);
-        setProgress(10);
+        backpack.users.put(self).then(() => {
+            setCompleteTasks(e => [...e, w.self ]);
+        });
 
     }, [ self ]);
 
@@ -44,7 +45,9 @@ export default function Bootstrapper() {
 
         if (! companies) return;
 
-        backpack.companies.batch
+        backpack.companies.bulkAdd(companies).then(() => {
+            setCompleteTasks(e => [...e, w.companies ]);
+        });
 
     }, [ companies ]);
 
@@ -53,7 +56,7 @@ export default function Bootstrapper() {
         <div id="bootsrapper">
             <h1>⏳ Please wait</h1>
             <div>we are fetching your stuff... </div>
-            <progress style={{ width: '100%' }} max="100" value={ progress } />
+            <progress style={{ width: '100%' }} max="100" value={ completeTasks.length * 25 } />
         </div>
     )
 }

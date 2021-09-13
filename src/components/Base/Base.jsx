@@ -20,21 +20,7 @@ import './base.css';
 export default function Base() {
 
     const [ state, dispatch ] = useReducer(reducer, initialState);
-    const selfId = localStorage.getItem('selfId');
     const { self, bootstrapped } = state;
-
-    // load player data if user is logged in
-    useEffect(() => {
-
-        async function loadSelf() {
-            const selfData = await backpack.users.get(selfId);
-            dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: selfData });
-        }
-
-        if (selfId && ! self)
-            loadSelf();
-
-    }, [ self, selfId ]);
 
     return (
         <BaseContext.Provider value={{ state, dispatch }}>
