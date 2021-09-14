@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { routes } from '../dictionary';
-import { BaseContext } from './Base/reducer';
+import BaseContext from './Base/BaseContext';
 
 
 export default function PrivateRoute({ component: Component, ...rest }) {

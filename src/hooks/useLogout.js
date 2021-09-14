@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { actionTypes, routes as r, words as w } from '../dictionary';
-import { BaseContext } from '../components/Base/reducer';
+import BaseContext from '../components/Base/BaseContext';
 
 
 export default function useLogout() {

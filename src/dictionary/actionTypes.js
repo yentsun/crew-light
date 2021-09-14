@@ -3,7 +3,8 @@ const actionTypes = {
     SUCCESS: 'SUCCESS',
     ERROR: 'ERROR',
     REQUEST_END: 'REQUEST_END',
-    SELF_DATA_RECEIVED: 'SELF_DATA_RECEIVED'
+    LOGGED_OUT: 'LOGGED_OUT',
+    SELF_BOOTSTRAPPED: 'SELF_BOOTSTRAPPED'
 }
 
 export default actionTypes;

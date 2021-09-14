@@ -1,17 +1,16 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import {
     Switch,
     BrowserRouter as Router,
     Redirect,
 } from 'react-router-dom';
-import { actionTypes, routes as r } from '../../dictionary';
-import { backpack } from '../../index';
+import { routes as r } from '../../dictionary';
 import PublicRoute from '../PublicRoute';
 import PrivateRoute from '../PrivateRoute';
 import Login from '../Login/Login';
 import TopBar from '../TopBar';
 import MainMenu from '../MainMenu';
-import { BaseContext, initialState, reducer } from './reducer';
+import BaseContext, { initialState, reducer } from './BaseContext';
 import Bootstrapper from '../Bootstrapper/Bootstrapper';
 import '@fontsource/dm-mono';
 import './base.css';
@@ -20,13 +19,13 @@ import './base.css';
 export default function Base() {
 
     const [ state, dispatch ] = useReducer(reducer, initialState);
-    const { self, bootstrapped } = state;
+    const { bootstrapped } = state;
 
     return (
         <BaseContext.Provider value={{ state, dispatch }}>
             <div id="content" className="center">
 
-                { (self && ! bootstrapped) &&
+                { ! bootstrapped &&
                 <Bootstrapper /> }
 
                 { bootstrapped && <>

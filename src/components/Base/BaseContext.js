@@ -2,7 +2,7 @@ import React from 'react';
 import { actionTypes as a } from '../../dictionary';
 
 
-/*****************!! WARNING !!**********************
+/***************** ⚠️ WARNING ***********************
  *                                                  *
  *        AS FEW ACTIONS AS POSSIBLE HERE           *
  *                                                  *
@@ -13,16 +13,18 @@ export const initialState = {
     bootstrapped: false
 };
 
+
 export const reducer = (state, action) => {
+
     switch (action.type) {
 
-        case a.SELF_DATA_RECEIVED:
+        case a.SELF_BOOTSTRAPPED:
 
             return {...state,
-                self:  action.data
+                self:  action.self
             };
 
-        case a.USER_LOGGED_OUT:
+        case a.LOGGED_OUT:
             return initialState;
 
         default:
@@ -31,4 +33,6 @@ export const reducer = (state, action) => {
 
 }
 
-export const BaseContext = React.createContext();
+const BaseContext = React.createContext();
+
+export default BaseContext;

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { backpack } from '../../index';
-import { actionTypes, words as w } from '../../dictionary';
-import { BaseContext } from '../Base/reducer';
+import { actionTypes as a, words as w } from '../../dictionary';
+import BaseContext from '../Base/BaseContext';
 import useGetSelf from './useGetSelf';
 
 
@@ -23,33 +22,50 @@ export default function Bootstrapper() {
     const { dispatch } = useContext(BaseContext);
     const [ completeTasks, setCompleteTasks ] = useState([]);
     const [ self ] = useGetSelf();
-    const [ getCompanies, companies ] = useGetCompanies();
-    const [ getCampaigns, campaigns ] = useGetCampaigns();
-    const [ getLogs, logs ] = useGetLogs();
+    // const [ companies ] = useGetCompanies();
+    // const [ campaigns ] = useGetCampaigns();
+    // const [ logs ] = useGetLogs();
 
     // user
     useEffect(() => {
 
-        if (! self) return;
-
-
-        dispatch({ type: actionTypes.SELF_DATA_RECEIVED, data: self });
-        backpack.users.put(self).then(() => {
+        if (self) {
+            dispatch({ type: a.SELF_BOOTSTRAPPED, self });
             setCompleteTasks(e => [...e, w.self ]);
-        });
+            console.debug('self data bootstrapped');
+        }
 
-    }, [ self ]);
-
-    // companies
-    useEffect(() => {
-
-        if (! companies) return;
-
-        backpack.companies.bulkAdd(companies).then(() => {
-            setCompleteTasks(e => [...e, w.companies ]);
-        });
-
-    }, [ companies ]);
+    }, [ self, dispatch ]);
+    //
+    // // companies
+    // useEffect(() => {
+    //
+    //     if (companies) {
+    //         dispatch({ type: a.COMPANIES_BOOTSTRAPPED, companies })
+    //         setCompleteTasks(e => [...e, w.companies ]);
+    //     }
+    //
+    // }, [ companies ]);
+    //
+    // // campaigns
+    // useEffect(() => {
+    //
+    //     if (campaigns) {
+    //         dispatch({ type: a.CAMPAIGNS_BOOTSTRAPPED, campaigns })
+    //         setCompleteTasks(e => [...e, w.campaigns ]);
+    //     }
+    //
+    // }, [ campaigns ]);
+    //
+    // // logs
+    // useEffect(() => {
+    //
+    //     if (logs) {
+    //         dispatch({ type: a.LOGS_BOOTSTRAPPED, logs })
+    //         setCompleteTasks(e => [...e, w.logs ]);
+    //     }
+    //
+    // }, [ logs ]);
 
 
     return (

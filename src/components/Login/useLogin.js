@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import useSimpleCrewAPI from '../../hooks/useSimpleCrewAPI';
+import useSCAPI from '../../hooks/useSCAPI';
 
 
 export default function useLogin() {
 
-    const [ request, state ] = useSimpleCrewAPI();
+    const [ request, state ] = useSCAPI();
     const [ credentials, setCredentials ] = useState(null);
 
     // get the auth token

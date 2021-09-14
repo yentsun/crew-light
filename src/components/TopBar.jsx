@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import useLogout from '../hooks/useLogout';
-import { BaseContext } from './Base/reducer';
+import BaseContext from './Base/BaseContext';
 
 
 const formatter = new Intl.NumberFormat({

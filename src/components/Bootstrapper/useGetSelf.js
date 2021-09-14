@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import useSimpleCrewAPI from '../../hooks/useSimpleCrewAPI';
-import {backpack} from "../../index";
-import {keys} from "../../dictionary";
+import { requestFromSCAPI } from '../../hooks/useSCAPI';
+import { backpack } from '../../index';
+import { keys } from "../../dictionary";
 
 
 /**
@@ -15,34 +15,32 @@ import {keys} from "../../dictionary";
 export default function useGetSelf() {
 
     const [ self, setSelf ] = useState(null);
-    const [ localRecordFound, setLocalRecordFound ] = useState(null);
-    const [ request, response ] = useSimpleCrewAPI();
 
-    // get from local storage
     useEffect(() => {
 
-        // initial try
-        if (self === null) return;
+        async function getSelf() {
 
-        backpack.users.get(localStorage.getItem(keys.selfId)).then(self => setSelf(self || false));
+            console.debug('getting self from backpack...');
+            const foundInBackpack = await backpack.users.get(localStorage.getItem(keys.selfId));
+
+            if (foundInBackpack) {
+                setSelf(foundInBackpack);
+                return;
+            }
+
+            console.debug('fetching self from remote...');
+            const response = await requestFromSCAPI({ method: 'GET', url: '/user' });
+
+            if (response) {
+                await backpack.users.add(response.json);
+                setSelf(response.json);
+            }
+        }
+
+        if (! self)
+            getSelf();
 
     }, [ self ]);
 
-    // request from remote
-    useEffect(() => {
-
-        if (localRecord === false)  // we already checked backpack
-            request({ method: 'GET', url: '/user' });
-
-    }, [ request, localRecord ]);
-
-    // store locally
-    useEffect(() => {
-
-        if (response.json)
-            backpack.users.add(response.json).then(self => setSelf(self));
-
-    }, [ response.json ]);
-
-    return [ localRecord || response.json ];
+    return [ self ];
 }
