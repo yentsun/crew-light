@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { actionTypes as a, words as w } from '../../dictionary';
 import BaseContext from '../Base/BaseContext';
 import useGetSelf from './useGetSelf';
-import useGetCompanies from "./useGetCompanies";
+import useGetCompanies from './useGetCompanies';
+import useGetCampaigns from './useGetCampaigns';
 
 
 /**
@@ -24,7 +25,7 @@ export default function Bootstrapper() {
     const [ completeTasks, setCompleteTasks ] = useState([]);
     const [ self ] = useGetSelf();
     const [ companies ] = useGetCompanies();
-    // const [ campaigns ] = useGetCampaigns();
+    const [ campaigns ] = useGetCampaigns();
     // const [ logs ] = useGetLogs();
 
     // user
@@ -48,17 +49,18 @@ export default function Bootstrapper() {
         }
 
     }, [ companies, dispatch ]);
-    //
-    // // campaigns
-    // useEffect(() => {
-    //
-    //     if (campaigns) {
-    //         dispatch({ type: a.CAMPAIGNS_BOOTSTRAPPED, campaigns })
-    //         setCompleteTasks(e => [...e, w.campaigns ]);
-    //     }
-    //
-    // }, [ campaigns ]);
-    //
+
+    // campaigns
+    useEffect(() => {
+
+        if (campaigns) {
+            dispatch({ type: a.CAMPAIGNS_BOOTSTRAPPED, campaigns })
+            setCompleteTasks(e => [...e, w.campaigns ]);
+            console.debug('campaigns bootstrapped');
+        }
+
+    }, [ campaigns, dispatch ]);
+
     // // logs
     // useEffect(() => {
     //

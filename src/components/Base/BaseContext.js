@@ -19,15 +19,16 @@ export const reducer = (state, action) => {
     switch (action.type) {
 
         case a.SELF_BOOTSTRAPPED:
-
             return {...state,
-                self:  action.self
-            };
+                self:  action.self };
 
         case a.COMPANIES_BOOTSTRAPPED:
             return {...state,
-                companies: action.companies
-            }
+                companies: action.companies }
+
+        case a.CAMPAIGNS_BOOTSTRAPPED:
+            return {...state,
+                campaigns: action.campaigns }
 
         case a.LOGGED_OUT:
             return initialState;
