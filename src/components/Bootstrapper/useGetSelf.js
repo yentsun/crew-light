@@ -37,10 +37,9 @@ export default function useGetSelf() {
             }
         }
 
-        if (! self)
-            getSelf();
+        getSelf();
 
-    }, [ self ]);
+    }, []);
 
     return [ self ];
 }

@@ -24,6 +24,11 @@ export const reducer = (state, action) => {
                 self:  action.self
             };
 
+        case a.COMPANIES_BOOTSTRAPPED:
+            return {...state,
+                companies: action.companies
+            }
+
         case a.LOGGED_OUT:
             return initialState;
 
