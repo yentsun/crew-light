@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { requestFromSCAPI } from '../../hooks/useSCAPI';
+import { fetchFromSCAPI } from '../../hooks/useSCAPI';
 import { backpack } from '../../index';
 
 
@@ -28,7 +28,7 @@ export default function useGetCompanies() {
             }
 
             console.debug('fetching companies from remote...');
-            const response = await requestFromSCAPI({ method: 'GET', url: '/companies' });
+            const response = await fetchFromSCAPI({ method: 'GET', url: '/companies' });
 
             if (response) {
                 await backpack.companies.bulkAdd(response.json);

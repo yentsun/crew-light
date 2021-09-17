@@ -4,6 +4,7 @@ import BaseContext from '../Base/BaseContext';
 import useGetSelf from './useGetSelf';
 import useGetCompanies from './useGetCompanies';
 import useGetCampaigns from './useGetCampaigns';
+import useGetLogs from './useGetLogs';
 
 
 /**
@@ -26,7 +27,7 @@ export default function Bootstrapper() {
     const [ self ] = useGetSelf();
     const [ companies ] = useGetCompanies();
     const [ campaigns ] = useGetCampaigns();
-    // const [ logs ] = useGetLogs();
+    const [ logs ] = useGetLogs();
 
     // user
     useEffect(() => {
@@ -61,16 +62,15 @@ export default function Bootstrapper() {
 
     }, [ campaigns, dispatch ]);
 
-    // // logs
-    // useEffect(() => {
-    //
-    //     if (logs) {
-    //         dispatch({ type: a.LOGS_BOOTSTRAPPED, logs })
-    //         setCompleteTasks(e => [...e, w.logs ]);
-    //     }
-    //
-    // }, [ logs ]);
+    // logs
+    useEffect(() => {
 
+        if (logs) {
+            dispatch({ type: a.LOGS_BOOTSTRAPPED, logs })
+            setCompleteTasks(e => [...e, w.logs ]);
+        }
+
+    }, [ logs, dispatch ]);
 
     return (
         <div id="bootsrapper">
@@ -78,5 +78,5 @@ export default function Bootstrapper() {
             <div>we are fetching your stuff... </div>
             <progress style={{ width: '100%' }} max="100" value={ completeTasks.length * 25 } />
         </div>
-    )
+    );
 }

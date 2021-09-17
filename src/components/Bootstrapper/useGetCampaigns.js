@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { requestFromSCAPI } from '../../hooks/useSCAPI';
+import { fetchFromSCAPI } from '../../hooks/useSCAPI';
 import { backpack } from '../../index';
 
 
@@ -28,7 +28,7 @@ export default function useGetCampaigns() {
             }
 
             console.debug('fetching campaigns from remote...');
-            const response = await requestFromSCAPI({ method: 'GET', url: '/campaigns' });
+            const response = await fetchFromSCAPI({ method: 'GET', url: '/campaigns' });
 
             if (response) {
                 await backpack.campaigns.bulkAdd(response.json);

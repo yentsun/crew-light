@@ -30,6 +30,10 @@ export const reducer = (state, action) => {
             return {...state,
                 campaigns: action.campaigns }
 
+        case a.LOGS_BOOTSTRAPPED:
+            return {...state,
+                logs: action.logs }
+
         case a.LOGGED_OUT:
             return initialState;
 

@@ -63,7 +63,7 @@ function reducer(state, action) {
  * @return {Object | Undefined} fetch response object (success) or null
  */
 
-export async function requestFromSCAPI(config, dispatch=()=>{}) {
+export async function fetchFromSCAPI(config, dispatch=()=>{}) {
 
     console.debug('requesting', config);
     const { url, headers, method, data, requiresAuth=true, ...resOfConfig } = config;
@@ -118,7 +118,7 @@ export default function useSCAPI() {
     useEffect(() => {
 
         if (requestConfig)
-            requestFromSCAPI(requestConfig, dispatch);
+            fetchFromSCAPI(requestConfig, dispatch);
 
     }, [ requestConfig ]);
 
