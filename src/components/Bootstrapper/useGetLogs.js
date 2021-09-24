@@ -5,7 +5,7 @@ import { keys } from '../../dictionary';
 
 
 /**
- * One-time fetch user logs via Dexie or API.
+ * One-time fetch user logs via Dexie or SCAPI.
  * Request starts immediately.
  *
  * @hook

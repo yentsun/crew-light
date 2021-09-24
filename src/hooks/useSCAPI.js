@@ -14,7 +14,6 @@ const initialState = {
     status: null
 };
 
-
 function reducer(state, action) {
 
     switch (action.type) {
@@ -51,7 +50,6 @@ function reducer(state, action) {
             throw new Error('Unknown action type');
     }
 }
-
 
 /**
  * Perform an HTTP request to SimpleCrew API (SCAPI) via `fetch`.
