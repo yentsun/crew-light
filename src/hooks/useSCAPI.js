@@ -79,7 +79,8 @@ export async function fetchFromSCAPI(config, dispatch=()=>{}) {
                 ...(data && sendingData) &&
                 { 'Content-Type': 'application/json' },
                 ...(requiresAuth && localStorage.hasOwnProperty('token')) &&
-                { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                ...headers
             },
             ...data && { body: JSON.stringify(data) },
             ...resOfConfig
