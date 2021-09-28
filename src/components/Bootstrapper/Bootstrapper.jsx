@@ -29,6 +29,14 @@ export default function Bootstrapper() {
     const [ campaigns ] = useGetCampaigns();
     const [ logs ] = useGetLogs();
 
+    // notify global when done
+    useEffect(() => {
+
+        if (completeTasks.length === 4)
+            dispatch({ type: a.ALL_BOOTSTRAPPED })
+
+    }, [ completeTasks, dispatch ]);
+
     // user
     useEffect(() => {
 
@@ -68,6 +76,7 @@ export default function Bootstrapper() {
         if (logs) {
             dispatch({ type: a.LOGS_BOOTSTRAPPED, logs })
             setCompleteTasks(e => [...e, w.logs ]);
+            console.debug('logs bootstrapped');
         }
 
     }, [ logs, dispatch ]);

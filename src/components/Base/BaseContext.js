@@ -10,7 +10,10 @@ import { actionTypes as a } from '../../dictionary';
 
 export const initialState = {
     self: null,
-    bootstrapped: false
+    bootstrapped: false,
+    companies: null,
+    campaigns: null,
+    logs: null
 };
 
 
@@ -33,6 +36,11 @@ export const reducer = (state, action) => {
         case a.LOGS_BOOTSTRAPPED:
             return {...state,
                 logs: action.logs }
+
+        case a.ALL_BOOTSTRAPPED:
+            return {...state,
+                bootstrapped: true
+            }
 
         case a.LOGGED_OUT:
             return initialState;
