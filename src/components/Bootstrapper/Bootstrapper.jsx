@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { actionTypes as a, words as w } from '../../dictionary';
 import BaseContext from '../Base/BaseContext';
 import useGetSelf from './useGetSelf';
-import useGetCompanies from './useGetCompanies';
 import useGetCampaigns from './useGetCampaigns';
 import useGetLogs from './useGetLogs';
 
@@ -13,7 +12,6 @@ import useGetLogs from './useGetLogs';
  *
  * Inventory includes:
  * - user data (self)
- * - companies
  * - campaigns
  * - logs
  *
@@ -25,14 +23,13 @@ export default function Bootstrapper() {
     const { dispatch } = useContext(BaseContext);
     const [ completeTasks, setCompleteTasks ] = useState([]);
     const [ self ] = useGetSelf();
-    const [ companies ] = useGetCompanies();
     const [ campaigns ] = useGetCampaigns();
     const [ logs ] = useGetLogs();
 
     // notify global when done
     useEffect(() => {
 
-        if (completeTasks.length === 4)
+        if (completeTasks.length === 3)
             dispatch({ type: a.ALL_BOOTSTRAPPED })
 
     }, [ completeTasks, dispatch ]);
@@ -47,17 +44,6 @@ export default function Bootstrapper() {
         }
 
     }, [ self, dispatch ]);
-
-    // companies
-    useEffect(() => {
-
-        if (companies) {
-            dispatch({ type: a.COMPANIES_BOOTSTRAPPED, companies })
-            setCompleteTasks(e => [...e, w.companies ]);
-            console.debug('companies bootstrapped');
-        }
-
-    }, [ companies, dispatch ]);
 
     // campaigns
     useEffect(() => {
@@ -82,10 +68,10 @@ export default function Bootstrapper() {
     }, [ logs, dispatch ]);
 
     return (
-        <div id="bootsrapper">
+        <div id="bootstrapper">
             <h1>⏳ Please wait</h1>
             <div>we are fetching your stuff... </div>
-            <progress style={{ width: '100%' }} max="100" value={ completeTasks.length * 25 } />
+            <progress style={{ width: '100%' }} max="100" value={ completeTasks.length * 33 } />
         </div>
     );
 }

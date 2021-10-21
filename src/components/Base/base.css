@@ -23,11 +23,25 @@ a {
     color: var(--primaryBlue);
 }
 
-.center {
+#bootstrapper {
+    padding: 50% 1.2em 0 1.2em;
+    height: 100%;
+
+}
+
+#main {
     display: grid;
-    grid-template-rows: 100vh;
+    grid-template-rows: 10% 100vh;
     align-items: center;
     justify-items: center;
+}
+
+#top-bar {
+    background-color: white;
+    place-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

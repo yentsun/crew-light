@@ -14,11 +14,7 @@ export default function TopBar() {
 
     return (<div id="top-bar">
 
-        <div id="resources">stats</div>
-
-        <div id="balance">{ self ? formatter.format(self.balance) : 'loading...' }</div>
-
-        <div id="player-menu" onClick={ () => logOut() }>{ self.email }</div>
+        <div id="player-menu" onClick={ () => logOut() }>👤 { self.email }</div>
 
     </div>);
 }

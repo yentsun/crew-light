@@ -23,12 +23,13 @@ export default function Base() {
 
     return (
         <BaseContext.Provider value={{ state, dispatch }}>
-            <div id="content" className="center">
+            <div id="base">
 
                 { ! bootstrapped &&
                 <Bootstrapper /> }
 
-                { bootstrapped && <>
+                { bootstrapped &&
+                <div id="main">
                     <TopBar />
                     <Router>
                         <Switch>
@@ -38,10 +39,9 @@ export default function Base() {
                             <Redirect to={ r.mainMenu } />
                         </Switch>
                     </Router>
-                </> }
+                </div> }
 
             </div>
-
         </BaseContext.Provider>
     );
 }

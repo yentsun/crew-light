@@ -10,7 +10,7 @@ const backpack = new Dexie('backpack');
 backpack.version(1).stores({ companies: 'id', campaigns: 'id', logs: 'id', users: 'id' });
 
 // render Base component
-ReactDOM.render(<React.StrictMode><Base /></React.StrictMode>, document.getElementById('base'));
+ReactDOM.render(<React.StrictMode><Base /></React.StrictMode>, document.getElementById('root'));
 
 // PWA
 serviceWorkerRegistration.register();
