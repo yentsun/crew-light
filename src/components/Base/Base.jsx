@@ -1,17 +1,14 @@
 import React, { useReducer } from 'react';
-import {
-    Switch,
-    BrowserRouter as Router,
-    Redirect,
-} from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import { routes as r } from '../../dictionary';
 import PublicRoute from '../PublicRoute';
 import PrivateRoute from '../PrivateRoute';
 import Login from '../Login/Login';
 import TopBar from '../TopBar';
-import MainMenu from '../MainMenu';
 import BaseContext, { initialState, reducer } from './BaseContext';
+import CompanyList from '../CompanyList/CompanyList';
 import Bootstrapper from '../Bootstrapper/Bootstrapper';
+import CompanyRoot from '../CompanyRoot/CompanyRoot';
 import '@fontsource/dm-mono';
 import './base.css';
 
@@ -35,8 +32,9 @@ export default function Base() {
                         <Switch>
                             <PublicRoute path={ r.login } component={ Login }/>
 
-                            <PrivateRoute path={ r.mainMenu } component={ MainMenu } />
-                            <Redirect to={ r.mainMenu } />
+                            <PrivateRoute path={ r.companyRoot } component={ CompanyRoot } />
+                            <PrivateRoute path={ r.companyList } component={ CompanyList } />
+                            <Redirect to={ r.companyList } />
                         </Switch>
                     </Router>
                 </div> }

@@ -4,6 +4,7 @@ import BaseContext from '../Base/BaseContext';
 import useGetSelf from './useGetSelf';
 import useGetCampaigns from './useGetCampaigns';
 import useGetLogs from './useGetLogs';
+import useGetCompanies from './useGetCompanies';
 
 
 /**
@@ -23,14 +24,19 @@ export default function Bootstrapper() {
     const { dispatch } = useContext(BaseContext);
     const [ completeTasks, setCompleteTasks ] = useState([]);
     const [ self ] = useGetSelf();
+    const [ companies ] = useGetCompanies();
     const [ campaigns ] = useGetCampaigns();
     const [ logs ] = useGetLogs();
 
     // notify global when done
     useEffect(() => {
 
-        if (completeTasks.length === 3)
-            dispatch({ type: a.ALL_BOOTSTRAPPED })
+        console.log('***')
+
+        if (completeTasks.length === 3) {
+            dispatch({ type: a.ALL_BOOTSTRAPPED });
+            console.debug('all bootstrapped');
+        }
 
     }, [ completeTasks, dispatch ]);
 
@@ -44,6 +50,17 @@ export default function Bootstrapper() {
         }
 
     }, [ self, dispatch ]);
+
+    // companies
+    useEffect(() => {
+
+        if (campaigns) {
+            dispatch({ type: a.COMPANIES_BOOTSTRAPPED, companies })
+            setCompleteTasks(e => [...e, w.companies ]);
+            console.debug('companies bootstrapped');
+        }
+
+    }, [ companies, dispatch ]);
 
     // campaigns
     useEffect(() => {

@@ -1,6 +1,7 @@
 const words = {
     self: 'self',
     companies: 'companies',
+    company: 'company',
     campaigns: 'campaigns',
     logs: 'logs',
     login: 'login',

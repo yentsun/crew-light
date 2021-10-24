@@ -3,10 +3,6 @@ import useLogout from '../hooks/useLogout';
 import BaseContext from './Base/BaseContext';
 
 
-const formatter = new Intl.NumberFormat({
-    style: 'decimal'
-});
-
 export default function TopBar() {
 
     const { state: { self }} = useContext(BaseContext);

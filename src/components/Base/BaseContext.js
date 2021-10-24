@@ -12,12 +12,16 @@ export const initialState = {
     self: null,
     bootstrapped: false,
     companies: null,
+    company:null,
     campaigns: null,
     logs: null
 };
 
 
 export const reducer = (state, action) => {
+
+    console.debug('pre-action state:', state);
+    console.debug('action:', action);
 
     switch (action.type) {
 
@@ -28,6 +32,11 @@ export const reducer = (state, action) => {
         case a.COMPANIES_BOOTSTRAPPED:
             return {...state,
                 companies: action.companies }
+
+        case a.COMPANY_SELECTED:
+            return {...state,
+                company: action.company
+            }
 
         case a.CAMPAIGNS_BOOTSTRAPPED:
             return {...state,

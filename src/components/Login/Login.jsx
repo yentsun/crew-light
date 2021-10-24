@@ -32,7 +32,7 @@ export default function Login() {
         const token = loginState.json.token;
         console.debug('storing token...');
         localStorage.setItem('token', token);
-        history.push(r.mainMenu);
+        history.push(r.companyList);
 
     }, [ loginState.json, history ]);
 

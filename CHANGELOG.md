@@ -2,5 +2,6 @@
 -------
 - [x] Add auth
 - [x] Add user companies list
-- [ ] Add campaign list
+- [x] Add campaign list
 - [ ] Add log list
+- [ ] Add error screen

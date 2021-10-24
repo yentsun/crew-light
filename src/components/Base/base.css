@@ -31,7 +31,7 @@ a {
 
 #main {
     display: grid;
-    grid-template-rows: 10% 100vh;
+    grid-template-rows: 40px auto;
     align-items: center;
     justify-items: center;
 }
@@ -42,6 +42,17 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* MAIN MENU */
+
+.main-menu {
+    padding: 1em;
+}
+
+.main-menu h1 {
+    font-size: 120%;
+    text-align: center;
 }
 
 
