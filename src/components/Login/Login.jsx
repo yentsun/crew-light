@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { words as w, routes as r } from '../../dictionary';
 import Logo from '../../Logo.svg';
 import useLoginAPI from './useLogin';
+import { storeToken } from '../../localStorage';
 import './login.css';
 
 
@@ -30,8 +31,7 @@ export default function Login() {
         if (! loginState.json || ! loginState.json.token) return;
 
         const token = loginState.json.token;
-        console.debug('storing token...');
-        localStorage.setItem('token', token);
+        storeToken(token);
         navigate(r.dashboard);
 
     }, [ loginState.json, navigate ]);
