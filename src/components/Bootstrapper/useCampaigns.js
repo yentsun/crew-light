@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchFromSCAPI } from '../../hooks/useSCAPI';
+import { fetchFromBackend } from '../../hooks/useBackend';
 import { backpack } from '../../index';
 
 
@@ -11,7 +11,7 @@ import { backpack } from '../../index';
  * @return {Object[]} - campaigns array
  */
 
-export default function useGetCampaigns() {
+export default function useCampaigns() {
 
     const [ campaigns, setCampaigns ] = useState(null);
 
@@ -28,7 +28,7 @@ export default function useGetCampaigns() {
             }
 
             console.debug('fetching campaigns from remote...');
-            const response = await fetchFromSCAPI({ method: 'GET', url: '/campaigns' });
+            const response = await fetchFromBackend({ method: 'GET', url: '/campaigns' });
 
             if (response) {
                 await backpack.campaigns.bulkAdd(response.json);

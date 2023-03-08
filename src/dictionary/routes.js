@@ -2,8 +2,9 @@ import w from './words';
 
 
 const routes = {
+    root: '/',
     login: `/${w.login}`,
-    companyList: '/',
+    dashboard: `/${w.dashboard}`,
     companyRoot: '/companies/:companyId',
     campaignRoot: '/campaigns/:campaignId'
 }

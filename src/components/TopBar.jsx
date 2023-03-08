@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import useLogout from '../hooks/useLogout';
-import BaseContext from './Base/BaseContext';
+import GlobalContext from '../globalContext';
 
 
 export default function TopBar() {
 
-    const { state: { self }} = useContext(BaseContext);
+    const { state: { self }} = useContext(GlobalContext);
     const logOut = useLogout();
 
     return (<div id="top-bar">

@@ -1,16 +1,20 @@
 import Dexie from 'dexie';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Base from './components/Base/Base.jsx';
+import { createRoot } from 'react-dom/client';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import Router from './components/Router.jsx';
 
 
 // init local DB, the backpack
 const backpack = new Dexie('backpack');
 backpack.version(1).stores({ companies: 'id', campaigns: 'id', logs: 'id', users: 'id' });
 
-// render Base component
-ReactDOM.render(<React.StrictMode><Base /></React.StrictMode>, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+    <React.StrictMode>
+        <Router />
+    </React.StrictMode>);
 
 // PWA
 serviceWorkerRegistration.register();

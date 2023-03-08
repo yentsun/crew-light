@@ -52,7 +52,7 @@ function reducer(state, action) {
 }
 
 /**
- * Perform an HTTP request to SimpleCrew API (SCAPI) via `fetch`.
+ * Perform an HTTP request to SimpleCrew Backend via `fetch`.
  * Acts both as in-hook and exported async function.
  *
  * @async
@@ -61,7 +61,7 @@ function reducer(state, action) {
  * @return {Object | Undefined} fetch response object (success) or null
  */
 
-export async function fetchFromSCAPI(config, dispatch=()=>{}) {
+export async function fetchFromBackend(config, dispatch=()=>{}) {
 
     console.debug('requesting', config);
     const { url, headers, method, data, requiresAuth=true, ...resOfConfig } = config;
@@ -109,7 +109,7 @@ export async function fetchFromSCAPI(config, dispatch=()=>{}) {
     }
 }
 
-export default function useSCAPI() {
+export default function useBackend() {
 
     const [ requestConfig, setRequestConfig ] = useState(null);
     const [ state, dispatch ] = useReducer(reducer, initialState);
@@ -117,7 +117,7 @@ export default function useSCAPI() {
     useEffect(() => {
 
         if (requestConfig)
-            fetchFromSCAPI(requestConfig, dispatch);
+            fetchFromBackend(requestConfig, dispatch);
 
     }, [ requestConfig ]);
 

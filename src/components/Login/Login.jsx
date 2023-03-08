@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { words as w, routes as r } from '../../dictionary';
 import Logo from '../../Logo.svg';
 import useLoginAPI from './useLogin';
@@ -14,7 +14,7 @@ import './login.css';
 
 export default function Login() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ setCredentials, loginState ] = useLoginAPI();
@@ -32,9 +32,9 @@ export default function Login() {
         const token = loginState.json.token;
         console.debug('storing token...');
         localStorage.setItem('token', token);
-        history.push(r.companyList);
+        navigate(r.dashboard);
 
-    }, [ loginState.json, history ]);
+    }, [ loginState.json, navigate ]);
 
     return (
         <form id="login" onSubmit={ handleSubmit }>
@@ -44,11 +44,11 @@ export default function Login() {
             <h1>🔒 { w.login }</h1>
 
             <label htmlFor={ w.email }>{ w.email }</label>
-            <input id={ w.email } type="text" value={ email }
+            <input id={ w.email } type="text" value={ email } autoComplete="username"
                    onChange={ (e) => setEmail(e.target.value) }/>
 
             <label htmlFor={ w.password }>{ w.password }</label>
-            <input id={ w.password } type="password" value={ password }
+            <input id={ w.password } type="password" value={ password } autoComplete="current-password"
                    onChange={ (e) => setPassword(e.target.value) }/>
 
             <button disabled={ loginState.isInProgress } className="primary"

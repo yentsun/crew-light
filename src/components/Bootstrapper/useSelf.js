@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchFromSCAPI } from '../../hooks/useSCAPI';
+import { fetchFromBackend } from '../../hooks/useBackend';
 import { backpack } from '../../index';
 import { keys } from '../../dictionary';
 
@@ -12,7 +12,7 @@ import { keys } from '../../dictionary';
  * @return {Object[]} - [ <user data> ]
  */
 
-export default function useGetSelf() {
+export default function useSelf() {
 
     const [ self, setSelf ] = useState(null);
 
@@ -29,7 +29,7 @@ export default function useGetSelf() {
             }
 
             console.debug('fetching self from remote...');
-            const response = await fetchFromSCAPI({ method: 'GET', url: '/user' });
+            const response = await fetchFromBackend({ method: 'GET', url: '/user' });
 
             if (response) {
                 await backpack.users.add(response.json);

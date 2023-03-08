@@ -1,29 +1,33 @@
-import { useEffect, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { actionTypes, routes as r, words as w } from '../dictionary';
-import BaseContext from '../components/Base/BaseContext';
+import { useState, useEffect, useContext } from 'react';
+import { clearTokenFromStorage } from '../localStorage';
+import { actionTypes as a } from '../dictionary';
+import GlobalContext from '../globalContext';
 
 
+/**
+ * Log out current user
+ *
+ * @return {Function}
+ * */
 export default function useLogout() {
 
-    const history = useHistory();
-    const { dispatch } = useContext(BaseContext);
-    const [ isWaiting, setIsWaiting ] = useState(true);
+    const { dispatch, state: { user, company, token }} = useContext(GlobalContext);
+    const [ logoutWaiting, setLogoutWaiting ] = useState(true);
 
+    // TRACK LOGOUT AND RESET STATE + CLEAR TOKEN
     useEffect(() => {
 
-        async function doLogOut() {
-            console.debug('clearing user data from storage...');
-            dispatch({ type: actionTypes.USER_LOGGED_OUT });
+        if (logoutWaiting) return;
 
-            console.debug(`redirecting to ${w.login} screen`);
-            history.push(r.login);
-        }
+        console.debug('👤💨 logging out...');
 
-        if (! isWaiting)
-            doLogOut();
+        clearTokenFromStorage();
+        dispatch({ type: a.RESET });
+        setLogoutWaiting(true);
 
-    }, [ isWaiting, dispatch, history ]);
+        console.debug('👤💨✅ logged out successfully');
 
-    return setIsWaiting;
+    }, [ logoutWaiting, token, user, company, dispatch ]);
+
+    return setLogoutWaiting;
 }

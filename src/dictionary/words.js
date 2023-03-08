@@ -15,7 +15,9 @@ const words = {
     create: 'create',
     card: 'card',
     apply: 'apply',
-    inventory: 'inventory'
+    inventory: 'inventory',
+    success: 'success',
+    token: 'token'
 }
 
 export default words;

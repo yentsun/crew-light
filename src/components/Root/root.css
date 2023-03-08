@@ -23,36 +23,11 @@ a {
     color: var(--primaryBlue);
 }
 
-#bootstrapper {
-    padding: 50% 1.2em 0 1.2em;
-    height: 100%;
-
-}
-
 #main {
     display: grid;
-    grid-template-rows: 40px auto;
-    align-items: center;
-    justify-items: center;
-}
-
-#top-bar {
-    background-color: white;
-    place-self: stretch;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* MAIN MENU */
-
-.main-menu {
-    padding: 1em;
-}
-
-.main-menu h1 {
-    font-size: 120%;
-    text-align: center;
+    grid-template-rows: auto;
+    place-items: center;
+    min-height: 100vh;  /* align vertically */
 }
 
 

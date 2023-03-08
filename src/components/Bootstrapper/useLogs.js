@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchFromSCAPI } from '../../hooks/useSCAPI';
+import { fetchFromBackend } from '../../hooks/useBackend';
 import { backpack } from '../../index';
 import { keys } from '../../dictionary';
 
@@ -12,7 +12,7 @@ import { keys } from '../../dictionary';
  * @return {Object[]} - logs array
  */
 
-export default function useGetLogs() {
+export default function useLogs() {
 
     const [ logs, setLogs ] = useState(null);
 
@@ -29,7 +29,7 @@ export default function useGetLogs() {
             }
 
             console.debug('fetching logs from remote...');
-            const response = await fetchFromSCAPI({
+            const response = await fetchFromBackend({
                 method: 'GET',
                 headers: {
                     'accept': 'application/x-ndjson',

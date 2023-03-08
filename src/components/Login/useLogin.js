@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import useSCAPI from '../../hooks/useSCAPI';
+import useBackend from '../../hooks/useBackend';
 
 
 export default function useLogin() {
 
-    const [ request, state ] = useSCAPI();
+    const [ request, state ] = useBackend();
     const [ credentials, setCredentials ] = useState(null);
 
     // get the auth token

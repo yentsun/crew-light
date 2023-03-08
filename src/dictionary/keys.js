@@ -1,6 +1,7 @@
 const keys = {
     localDB: 'backpack',
-    selfId: 'selfId'
+    selfId: 'selfId',
+    redirectTo: 'redirectTo'
 };
 
 export default keys;

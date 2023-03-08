@@ -1,5 +1,5 @@
 import React from 'react';
-import { actionTypes as a } from '../../dictionary';
+import {actionTypes as a, constants} from './dictionary';
 
 
 /***************** ⚠️ WARNING ***********************
@@ -25,41 +25,28 @@ export const reducer = (state, action) => {
 
     switch (action.type) {
 
-        case a.SELF_BOOTSTRAPPED:
+        case a.SELF_FETCHED:
             return {...state,
                 self:  action.self };
-
-        case a.COMPANIES_BOOTSTRAPPED:
-            return {...state,
-                companies: action.companies }
 
         case a.COMPANY_SELECTED:
             return {...state,
                 company: action.company
             }
 
-        case a.CAMPAIGNS_BOOTSTRAPPED:
-            return {...state,
-                campaigns: action.campaigns }
-
-        case a.LOGS_BOOTSTRAPPED:
-            return {...state,
-                logs: action.logs }
-
-        case a.ALL_BOOTSTRAPPED:
-            return {...state,
-                bootstrapped: true
-            }
-
         case a.LOGGED_OUT:
             return initialState;
 
+        case a.WINDOW_WIDTH_CHANGED:
+            return {...state,
+                isMobile: action.width <= constants.mobileWidthThreshold };
+
         default:
-            throw new Error('unknown action type');
+            throw new Error(`unknown action type: ${action.type}`);
     }
 
 }
 
-const BaseContext = React.createContext();
+const GlobalContext = React.createContext();
 
-export default BaseContext;
+export default GlobalContext;

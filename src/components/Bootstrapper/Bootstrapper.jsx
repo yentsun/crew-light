@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { actionTypes as a, words as w } from '../../dictionary';
-import BaseContext from '../Base/BaseContext';
-import useGetSelf from './useGetSelf';
-import useGetCampaigns from './useGetCampaigns';
-import useGetLogs from './useGetLogs';
-import useGetCompanies from './useGetCompanies';
+import GlobalContext from '../../globalContext';
+import useSelf from './useSelf';
+import useCampaigns from './useCampaigns';
+import useLogs from './useLogs';
+import useCompanies from './useCompanies';
 
 
 /**
@@ -21,17 +21,15 @@ import useGetCompanies from './useGetCompanies';
 
 export default function Bootstrapper() {
 
-    const { dispatch } = useContext(BaseContext);
+    const { dispatch } = useContext(GlobalContext);
     const [ completeTasks, setCompleteTasks ] = useState([]);
-    const [ self ] = useGetSelf();
-    const [ companies ] = useGetCompanies();
-    const [ campaigns ] = useGetCampaigns();
-    const [ logs ] = useGetLogs();
+    const [ self ] = useSelf();
+    const [ companies ] = useCompanies();
+    const [ campaigns ] = useCampaigns();
+    const [ logs ] = useLogs();
 
     // notify global when done
     useEffect(() => {
-
-        console.log('***')
 
         if (completeTasks.length === 3) {
             dispatch({ type: a.ALL_BOOTSTRAPPED });
@@ -60,7 +58,7 @@ export default function Bootstrapper() {
             console.debug('companies bootstrapped');
         }
 
-    }, [ companies, dispatch ]);
+    }, [ companies, dispatch, campaigns ]);
 
     // campaigns
     useEffect(() => {

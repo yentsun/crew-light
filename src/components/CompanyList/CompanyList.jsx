@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { generatePath, NavLink } from 'react-router-dom';
 import { routes, words } from '../../dictionary';
-import BaseContext from '../Base/BaseContext';
+import GlobalContext from '../../globalContext';
 
 
 /**
@@ -10,7 +10,7 @@ import BaseContext from '../Base/BaseContext';
  */
 export default function CompanyList() {
 
-    const { state: { self }} = useContext(BaseContext);
+    const { state: { self }} = useContext(GlobalContext);
 
     return (<div id="company-list" className="main-menu">
 
