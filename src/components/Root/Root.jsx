@@ -1,10 +1,10 @@
-import jwtDecode from 'jwt-decode';
 import React, { useContext, useEffect } from 'react';
 import { Outlet, useMatch, useNavigate, useParams } from 'react-router-dom';
 import { actionTypes as a, routes } from '../../dictionary';
 import { getSettingsFromStorage, getTokenFromStorage, storeSettings } from '../../localStorage';
 import GlobalContext from '../../globalContext';
 import '../Root/root.css';
+import jwtDecode from "jwt-decode";
 
 
 export default function Root() {
@@ -12,7 +12,7 @@ export default function Root() {
     const navigate = useNavigate();
     const { companyId: companyIdFromRoute } = useParams();
     const rootRoute = useMatch(routes.root);
-    const { dispatch, state: { settings, token, user }} = useContext(GlobalContext);
+    const { dispatch, state: { settings, token, selfId }} = useContext(GlobalContext);
 
     // 🔑📤 load token from storage
     useEffect(() => {
@@ -23,7 +23,9 @@ export default function Root() {
 
         if (tokenFromStorage) {
             console.debug('🔑📤✅ got token from storage');
-            dispatch({ type: a.TOKEN_RECEIVED, token: tokenFromStorage });
+            const { uid: selfId } = jwtDecode(tokenFromStorage);
+            console.debug('👤🆔 got user ID from token', selfId);
+            dispatch({ type: a.TOKEN_RECEIVED, token: tokenFromStorage, selfId });
         }
 
         if (! tokenFromStorage) {
@@ -36,26 +38,23 @@ export default function Root() {
     // ⚙📤 LOAD SETTINGS WHEN TOKEN IS AVAILABLE
     useEffect(() => {
 
-        if (! token) return;
+        if (! selfId) return;
 
-        const { uid } = jwtDecode(token);
-        console.debug('👤🆔 got user ID from token', uid);
-        const settingsFromStorage = getSettingsFromStorage(uid);
+        const settingsFromStorage = getSettingsFromStorage(selfId);
         dispatch({ type: a.SETTINGS_LOADED, settings: settingsFromStorage });
         console.debug('👤⚙✅ got user settings from storage', settingsFromStorage);
 
-
-    }, [ token, dispatch, companyIdFromRoute ]);
+    }, [ selfId, dispatch, companyIdFromRoute ]);
 
     // ⚙💾 STORE SETTINGS ON CHANGE
     useEffect(() => {
 
-        if (user && settings) {
-            storeSettings(user.id, settings);
+        if (selfId && settings) {
+            storeSettings(selfId, settings);
             console.debug('👤⚙💾 updated user settings stored');
         }
 
-    }, [ user, settings ]);
+    }, [ selfId, settings ]);
 
     // add window width tracking
     useEffect(() => {

@@ -10,12 +10,9 @@ import {actionTypes as a, constants} from './dictionary';
 
 export const initialState = {
     token: null,
-    self: null,
-    bootstrapped: false,
-    companies: null,
-    company:null,
-    campaigns: null,
-    logs: null
+    selfId: null,
+    isMobile: null,
+    settings: null
 };
 
 
@@ -28,6 +25,7 @@ export const reducer = (state, action) => {
 
         case a.TOKEN_RECEIVED:
             return {...state,
+                selfId: action.selfId,
                 token: action.token };
 
         case a.SETTINGS_LOADED:
@@ -37,7 +35,7 @@ export const reducer = (state, action) => {
 
         case a.SELF_FETCHED:
             return {...state,
-                self:  action.self };
+                selfId:  action.self.id };
 
         case a.COMPANY_SELECTED:
             return {...state,

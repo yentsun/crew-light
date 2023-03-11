@@ -26,7 +26,6 @@ a {
 #main {
     display: grid;
     grid-template-rows: auto;
-    place-items: center;
     min-height: 100vh;  /* align vertically */
 }
 

@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 import { useCallback, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useBackend from '../../hooks/useBackend';
@@ -26,7 +27,9 @@ export default function useLogin() {
         if (! token) return;
 
         console.debug('🔑📡✅ got token from remote');
-        dispatch({ type: a.TOKEN_RECEIVED, token  });
+        const { uid: selfId } = jwtDecode(token);
+        console.debug('👤🆔 got user ID from token', selfId);
+        dispatch({ type: a.TOKEN_RECEIVED, token, selfId });
         storeToken(token);
         navigate(routes.dashboard);
 

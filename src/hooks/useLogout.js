@@ -11,6 +11,8 @@ import GlobalContext from '../globalContext';
  * */
 export default function useLogout() {
 
+    // TODO fix this
+
     const { dispatch, state: { user, company, token }} = useContext(GlobalContext);
     const [ logoutWaiting, setLogoutWaiting ] = useState(true);
 

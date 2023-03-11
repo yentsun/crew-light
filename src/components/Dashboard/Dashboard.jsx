@@ -9,7 +9,6 @@ export default function Dashboard() {
 
     const [ self ]  = useSelf();
 
-
     return <div id="dashboard">
 
         { self &&

@@ -1,42 +1,46 @@
 import { useContext, useEffect } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { actionTypes as a, routes } from '../dictionary';
 import GlobalContext from '../globalContext';
 import useBackend from './useBackend';
+import { backpack } from '../index';
+import {routes} from "../dictionary";
 
 
 export default function useSelf() {
 
-    const { dispatch, state: { self: selfFromState }} = useContext(GlobalContext);
     const navigate = useNavigate();
+    const { state: { selfId }} = useContext(GlobalContext);
     const [ callBackend, state ] = useBackend({ requiresAuth: true });
 
-    // 👤📡 PERFORM CALL
+    const [ self, hadALook ] = useLiveQuery(() =>
+        backpack.users.get(selfId)
+            .then(res => [ res, true ]), [ selfId ], []);
+
     useEffect(() => {
 
-        if (selfFromState) return;
+        if (hadALook && ! self) {
+            console.debug('👤📡 fetching self');
+            callBackend({ method: 'GET', url: '/user' });
+        }
 
-        console.debug('👤📡 fetching self');
-        callBackend({ method: 'GET', url: '/user' });
+    }, [ hadALook, self, callBackend ]);
 
-    }, [ callBackend, selfFromState ]);
-
-    // 👤⬆ SEND USER DETAILS TO CONTEXT
     useEffect(() => {
 
-        const self = state.data;
+        const self = state.json;
 
         if (self) {
-            console.debug('👤✔ self fetched:', self.id, self.email);
-            dispatch({ type: a.SELF_FETCHED, user: self });
+            console.debug('👤🎒💾 storing self', self.email);
+            backpack.users.add(self);
         }
 
         if (state.hasFailed) {
-            console.debug('👤❌ self fetch failed, going to login');
+            console.debug('👤📡❌ self fetch failed, going to login');
             navigate(routes.login);
         }
 
-    }, [ state, dispatch, navigate ]);
+    }, [ state, navigate ]);
 
-    return [ selfFromState ];
+    return [ self ];
 }
