@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { keys, routes } from '../dictionary';
+import { routes } from '../dictionary';
 import GlobalContext from '../globalContext';
 
 
@@ -15,7 +15,7 @@ export default function RequireAuth({ children }) {
 
         if (token === false) {
             console.debug('🔑❗ token required for this route', pathname);
-            navigate(`${routes.login}${pathname ? `?${keys.redirectTo}=` + pathname : ''}`)
+            navigate(routes.login);
         }
     }, [ token, pathname, navigate ]);
 

@@ -37,7 +37,6 @@ export default function Router() {
                         {/* private routes */}
                         <Route path={ routes.dashboard } element={ <RequireAuth><Dashboard /></RequireAuth> }>
 
-
                         </Route>
                     </Route>
 

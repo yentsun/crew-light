@@ -1,21 +1,18 @@
 import jwtDecode from 'jwt-decode';
 import React, { useContext, useEffect } from 'react';
-import { generatePath, Outlet, useLocation, useMatch, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useMatch, useNavigate, useParams } from 'react-router-dom';
 import { actionTypes as a, routes } from '../../dictionary';
-import { clearTokenFromStorage, getSettingsFromStorage, getTokenFromStorage,
-         storeSettings, storeToken } from '../../localStorage';
+import { getSettingsFromStorage, getTokenFromStorage, storeSettings } from '../../localStorage';
 import GlobalContext from '../../globalContext';
 import '../Root/root.css';
 
 
 export default function Root() {
 
-    const { pathname, search } = useLocation();
     const navigate = useNavigate();
     const { companyId: companyIdFromRoute } = useParams();
     const rootRoute = useMatch(routes.root);
-    const { dispatch, state: { settings, token, user,
-                               companyId: companyIdFromState }} = useContext(GlobalContext);
+    const { dispatch, state: { settings, token, user }} = useContext(GlobalContext);
 
     // 🔑📤 load token from storage
     useEffect(() => {
@@ -45,7 +42,7 @@ export default function Root() {
         console.debug('👤🆔 got user ID from token', uid);
         const settingsFromStorage = getSettingsFromStorage(uid);
         dispatch({ type: a.SETTINGS_LOADED, settings: settingsFromStorage });
-        console.debug('👤⚙📤✅ got user settings from storage', settingsFromStorage);
+        console.debug('👤⚙✅ got user settings from storage', settingsFromStorage);
 
 
     }, [ token, dispatch, companyIdFromRoute ]);
@@ -73,43 +70,22 @@ export default function Root() {
             window.removeEventListener('resize', dispatchEvent);
     }, [ dispatch ]);
 
-    // 🔑🌎 handle token presence in URL
-    useEffect(() => {
-
-        const params = new URLSearchParams(search);
-        const token = params.get('token');
-
-        // skip if there is no 'token' key
-        if (token === undefined) return;
-
-        // if token value is empty string - logout
-        if (token === '') {
-            dispatch({ type: a.TOKEN_RECEIVED, token: false });
-            clearTokenFromStorage();
-        }
-
-        // otherwise store the token and update state
-        if (token) {
-            dispatch({ type: a.TOKEN_RECEIVED, token });
-            navigate(pathname);
-            storeToken(token);
-        }
-    }, [ search, navigate, pathname, dispatch ]);
-
     // ⏩ redirect to and from root
     useEffect(() => {
 
-        if ((! rootRoute && companyIdFromRoute && token === false) || (rootRoute && token === false)) {
+        if ((! rootRoute && token === false) || (rootRoute && token === false)) {
             console.debug('⏩ redirecting to login');
             navigate(routes.login);
         }
 
-        if (rootRoute && companyIdFromState && token) {
-            console.debug('⏩ redirecting to company root 🆔', companyIdFromState);
-            navigate(generatePath(routes.companyRoot, { companyId: companyIdFromState }));
+        if (rootRoute && token) {
+            console.debug('⏩ redirecting to dashboard 🎛️');
+            navigate(routes.dashboard);
         }
 
-    }, [ rootRoute, companyIdFromRoute, companyIdFromState, token, navigate ]);
+    }, [ rootRoute, token, navigate ]);
 
-    return <div id="main"><Outlet /></div>;
+    return <div id="main" data-component="Root">
+        <Outlet />
+    </div>;
 }

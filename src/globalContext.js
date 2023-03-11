@@ -9,6 +9,7 @@ import {actionTypes as a, constants} from './dictionary';
  *****************************************************/
 
 export const initialState = {
+    token: null,
     self: null,
     bootstrapped: false,
     companies: null,
@@ -24,6 +25,15 @@ export const reducer = (state, action) => {
     console.debug('action:', action);
 
     switch (action.type) {
+
+        case a.TOKEN_RECEIVED:
+            return {...state,
+                token: action.token };
+
+        case a.SETTINGS_LOADED:
+            return {...state,
+                companyId: action.settings.selectedCompanyId,
+                settings: action.settings };
 
         case a.SELF_FETCHED:
             return {...state,

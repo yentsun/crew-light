@@ -1,5 +1,6 @@
-import { useEffect, useReducer, useState } from 'react';
+import {useContext, useEffect, useReducer, useState} from 'react';
 import { actionTypes as a } from '../dictionary';
+import GlobalContext from "../globalContext";
 
 
 const initialState = {
@@ -58,10 +59,11 @@ function reducer(state, action) {
  * @async
  * @param {Object} config - request config
  * @param {Function | Undefined} dispatch - dispatch function (if used in a hook)
+ * @param {String | Undefined} token - Auth token
  * @return {Object | Undefined} fetch response object (success) or null
  */
 
-export async function fetchFromBackend(config, dispatch=()=>{}) {
+export async function fetchFromBackend(config, dispatch=()=>{}, token) {
 
     console.debug('requesting', config);
     const { url, headers, method, data, requiresAuth=true, ...resOfConfig } = config;
@@ -78,8 +80,10 @@ export async function fetchFromBackend(config, dispatch=()=>{}) {
             headers: {
                 ...(data && sendingData) &&
                 { 'Content-Type': 'application/json' },
-                ...(requiresAuth && localStorage.hasOwnProperty('token')) &&
-                { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+
+                ...(requiresAuth && token) &&
+                { 'Authorization': `Bearer ${token}` },
+
                 ...headers
             },
             ...data && { body: JSON.stringify(data) },
@@ -111,15 +115,16 @@ export async function fetchFromBackend(config, dispatch=()=>{}) {
 
 export default function useBackend() {
 
+    const { state: { token }} = useContext(GlobalContext);
     const [ requestConfig, setRequestConfig ] = useState(null);
     const [ state, dispatch ] = useReducer(reducer, initialState);
 
     useEffect(() => {
 
         if (requestConfig)
-            fetchFromBackend(requestConfig, dispatch);
+            fetchFromBackend(requestConfig, dispatch, token);
 
-    }, [ requestConfig ]);
+    }, [ requestConfig, token ]);
 
     return [ setRequestConfig, state ];
 }

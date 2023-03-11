@@ -18,11 +18,11 @@ export default function Login() {
     const navigate = useNavigate();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [ setCredentials, loginState ] = useLoginAPI();
+    const [ login, loginState ] = useLoginAPI();
 
     function handleSubmit(e) {
         e.preventDefault();
-        setCredentials({ email, password });
+        login({ email, password });
     }
 
     // if token is received: store it and request user data

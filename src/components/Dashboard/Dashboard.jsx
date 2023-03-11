@@ -7,12 +7,13 @@ import './dashboard.css';
 
 export default function Dashboard() {
 
-    useSelf();
+    const [ self ]  = useSelf();
 
 
     return <div id="dashboard">
 
-        <TopBar />
+        { self &&
+         <TopBar self={ self } />}
 
         DASHBOARD
 
